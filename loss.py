@@ -39,6 +39,15 @@ class SourceEdgeMask(nn.Module):
         self.g_map = GradientMapping()
         
     def forward(self, x : torch.Tensor) -> torch.Tensor:
+        """
+        Computes the Source Edge Mask from the Gradient map of a given image. 
+        
+        Args: 
+            x (torch.Tensor): input tensor of shape (B, C, H, W)
+        
+        Returns: 
+            torch.Tensor: Source Edge Mask tensor of shape (B, H, W)
+        """
         B, C, H, W = x.shape
         G_i = self.g_map(x)
         max_G_i = torch.max(G_i.view(B, H*W)).item()
